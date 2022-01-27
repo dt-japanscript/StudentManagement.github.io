@@ -61,7 +61,8 @@ const renderStudents = () => {
             <td>${student.DiemLy}</td>
             <td>${student.DiemHoa}</td>
             <td>
-                <button class="btn btn-danger" onclick="deleteStudent('${student.MaSV} ')">Delete</button>
+            <button class="btn btn-danger" onclick="deleteStudent('${student.MaSV} ')">Delete</button>
+            <button class="btn btn-info" onclick="getStudent()'${student.MaSV}'">Update</button>
             </td>
         </tr>`;
     }
@@ -110,6 +111,32 @@ const deleteStudent = (id) => {
             console.log(err);
         });
 
+};
+
+// Function 5 : Lấy thông tin của SV muốn cập nhật vào show lên form
+const getStudent = (id) => {
+    axios({
+        url: `http://svcy.myclass.vn/api/SinhVien/LayThongTinSinhVien/${id}`,
+        method: "GET",
+    })
+        .then((res) => {
+            // console.log(res);
+            domID("btnThem").click();
+
+            domID("id").value = res.data.MaSV;
+            domID("name").value = res.data.HoTen;
+            domID("email").value = res.data.Email;
+            domID("phone").value = res.data.SoDT;
+            domID("idCard").value = res.data.CMND;
+            domID("math").value = res.data.DiemToan;
+            domID("physics").value = res.data.DiemLy;
+            domID("chemistry").value = res.data.DiemHoa;
+
+            domID("id").setAttribute("disable", true);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 };
 
 fetchStudents();
