@@ -60,6 +60,9 @@ const renderStudents = () => {
             <td>${student.DiemToan}</td>
             <td>${student.DiemLy}</td>
             <td>${student.DiemHoa}</td>
+            <td>
+                <button class="btn btn-danger" onclick="deleteStudent('${student.MaSV} ')">Delete</button>
+            </td>
         </tr>`;
     }
     domID("tableDanhSach").innerHTML = htmlContent;
@@ -90,6 +93,23 @@ const addStudent = () => {
         .catch((err) => {
             console.log(err);
         })
+};
+
+// Function 4 : Xóa SV
+const deleteStudent = (id) => {
+    console.log("Delete button pressed")
+    axios({
+        url: `http://svcy.myclass.vn/api/SinhVien/XoaSinhVien/${id}`,
+        method: "DELETE"
+    })
+        .then((res) => {
+            // console.log(res);
+            fetchStudents();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
 };
 
 fetchStudents();
