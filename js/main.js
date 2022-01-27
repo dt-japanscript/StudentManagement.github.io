@@ -139,4 +139,40 @@ const getStudent = (id) => {
         });
 };
 
+// Function 6 : Cập nhật thông tin SV
+const updateStudent = () => {
+    const studentId = domID("id").value;
+    const name = domID("name").value;
+    const email = domID("email").value;
+    const phone = domID("phone").value;
+    const idCard = domID("idCard").value;
+    const math = domID("math").value;
+    const physics = domID("physics").value;
+    const chemistry = domID("chemistry").value;
+
+    const updatedStudent = new Student(studentId, name, email, phone, idCard, math, physics, chemistry);
+
+    axios({
+        url: "http://svcy.myclass.vn/api/SinhVien/CapNhatThongTinSinhVien",
+        method: "PUT",
+        data: updatedStudent,
+    })
+        .then((res) => {
+            // clear form
+            domID("btnReset").click();
+
+            // an pop-up
+            domID("btnClose").click();
+
+            // mở khóa ô input của id
+            domID("id").removeAttribute("disable");
+
+            // fetch thong tin
+            fetchStudents();
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+};
+
 fetchStudents();
