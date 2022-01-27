@@ -65,4 +65,31 @@ const renderStudents = () => {
     domID("tableDanhSach").innerHTML = htmlContent;
 }
 
+// Function 3 : thêm SV
+const addStudent = () => {
+    const studentId = domID("id").value;
+    const name = domID("name").value;
+    const email = domID("email").value;
+    const phone = domID("phone").value;
+    const idCard = domID("idCard").value;
+    const math = domID("math").value;
+    const physics = domID("physics").value;
+    const chemistry = domID("chemistry").value;
+
+    const newStudent = new Student(studentId, name, email, phone, idCard, math, physics, chemistry);
+
+    axios({
+        url: "http://svcy.myclass.vn/api/SinhVien/ThemSinhVien",
+        method: "POST",
+        data: newStudent,
+    })
+        .then((res) => {
+            // console.log(res);
+            fetchStudents();
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+};
+
 fetchStudents();
